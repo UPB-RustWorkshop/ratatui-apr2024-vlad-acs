@@ -45,13 +45,17 @@ impl<B: Backend> Tui<B> {
         self.terminal.clear()?;
         Ok(())
     }
-
+    
     /// [`Draw`] the terminal interface by [`rendering`] the widgets.
     ///
     /// Returns Ok() is no errors occured, Err() otherwhise
     pub fn draw(&mut self, app: &mut App) {
         // [`Draw`]: ratatui::Terminal::draw
         // [`rendering`]: crate::ui:render
+        let result = Terminal::draw(&mut self.terminal, |frame| ui::render(app, frame));
+        if result.is_err() {
+            panic!();
+        }
     }
 
     /// Resets the terminal interface.
